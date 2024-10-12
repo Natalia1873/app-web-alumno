@@ -1,6 +1,7 @@
 package com.keepcoding.appweb.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,23 +11,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "alumno")
+@Table(name = "alumnos")
 public class Alumno implements Serializable{
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@Column(nullable = false, length = 50)
 	private String nombre;
+	
 	@Column(nullable = false, length = 50)
 	private String apellido;
-	private int telefono;
+	
+	@Column(nullable = false)
+	private String telefono;
+	
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
-	@Column(nullable = false, length = 50, unique = true)
+	
+	@Column(nullable = false, unique = true)
 	private String dni;
-	private String fecha_nac;
+	
+	@Column(nullable = false)
+	private LocalDate fecha_nacimiento;
+	
 	
 	
 	public long getId() {
@@ -34,9 +44,11 @@ public class Alumno implements Serializable{
 	}
 
 
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 
 
 	public String getNombre() {
@@ -44,9 +56,11 @@ public class Alumno implements Serializable{
 	}
 
 
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 
 
 	public String getApellido() {
@@ -54,19 +68,23 @@ public class Alumno implements Serializable{
 	}
 
 
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
 
 
-	public int getTelefono() {
+
+	public String getTelefono() {
 		return telefono;
 	}
 
 
-	public void setTelefono(int telefono) {
+
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+
 
 
 	public String getEmail() {
@@ -74,9 +92,11 @@ public class Alumno implements Serializable{
 	}
 
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 
 	public String getDni() {
@@ -84,19 +104,23 @@ public class Alumno implements Serializable{
 	}
 
 
+
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
 
 
-	public String getFecha_nac() {
-		return fecha_nac;
+
+	public LocalDate getFecha_nacimiento() {
+		return fecha_nacimiento;
 	}
 
 
-	public void setFecha_nac(String fecha_nac) {
-		this.fecha_nac = fecha_nac;
+
+	public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
 	}
+
 
 
 	/**
