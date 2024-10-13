@@ -1,37 +1,87 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Alumnos</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }
-        .container { background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        input, button { margin: 5px; padding: 5px; }
-        .actions { display: flex; justify-content: space-between; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f0f0f0; 
+        }
+        .container { 
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: left; 
+        }
+        th { 
+            background-color: #f2f2f2; 
+        }
+        input, button { 
+            margin: 5px; 
+            padding: 5px; 
+        }
+        .actions { 
+            display: flex; 
+            justify-content: space-between; 
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+        .success-message {
+            color: green;
+            margin-bottom: 15px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        form button {
+            grid-column: span 2;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gestión de Alumnos</h1>
-        
-        <h2>Agregar/Editar Alumno</h2>
-        <form id="alumnoForm">
-            <input type="hidden" id="alumnoId" name="id">
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
-            <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
-            <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-            <input type="text" id="dni" name="dni" placeholder="DNI" required>
-            <input type="date" id="fecha_nac" name="fecha_nac" required>
+ 
+        <!-- Mensajes de error o éxito -->
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="success-message">
+            <p th:text="${success}"></p>
+        </div>
+ 
+        <h2>Agregar Alumno</h2>
+        <form th:action="@{/alumnos}" th:object="${alumno}" method="post">
+            <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
+            <input type="text" th:field="*{apellido}" placeholder="Apellido" required>
+            <input type="tel" th:field="*{telefono}" placeholder="Teléfono" required>
+            <input type="email" th:field="*{email}" placeholder="Email" required>
+            <input type="text" th:field="*{dni}" placeholder="DNI" required>
+            <input type="date" th:field="*{fecha_nacimiento}" required>
             <button type="submit">Guardar</button>
         </form>
-
+ 
         <h2>Lista de Alumnos</h2>
-        <table id="alumnosTable">
+        <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -44,14 +94,22 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se insertarán las filas de alumnos dinámicamente -->
+                <tr th:each="alumno : ${alumnos}">
+                    <td th:text="${alumno.nombre}"></td>
+                    <td th:text="${alumno.apellido}"></td>
+                    <td th:text="${alumno.telefono}"></td>
+                    <td th:text="${alumno.email}"></td>
+                    <td th:text="${alumno.dni}"></td>
+                    <td th:text="${#temporals.format(alumno.fecha_nacimiento, 'dd-MM-yyyy')}"></td>
+                    <td class="actions">
+                        <a th:href="@{/alumnos/{id}(id=${alumno.id})}">Ver</a>
+                        <a th:href="@{/alumnos/edit/{id}(id=${alumno.id})}">Editar</a>
+                        <a th:href="@{/alumnos/delete/{id}(id=${alumno.id})}" 
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar este alumno?');">Eliminar</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-
-    <script>
-        // Aquí iría el código JavaScript para manejar las operaciones CRUD
-        // Este código se comunicaría con el backend a través de fetch o XMLHttpRequest
-    </script>
 </body>
 </html>

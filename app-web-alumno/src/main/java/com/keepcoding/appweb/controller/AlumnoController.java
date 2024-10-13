@@ -1,86 +1,70 @@
 package com.keepcoding.appweb.controller;
-
-import java.util.List;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.keepcoding.appweb.entity.Alumno;
 import com.keepcoding.appweb.service.AlumnoService;
-
-@RestController
-@RequestMapping("/api/alumnos")
+ 
+@Controller
+@RequestMapping("/alumnos")
 public class AlumnoController {
-
-	@Autowired
-	private AlumnoService alumnoService;
-
-	@GetMapping
-	public List<Alumno> getAllAlumnos() {
-		return alumnoService.findAll();
-	}
-
-	@GetMapping("/{id}")
-	public Alumno show(@PathVariable Long id) {
-		return alumnoService.findByID(id);
-	}
-
-	@PostMapping
-	public Alumno createAlumno(@RequestBody Alumno alumno) {
-		return alumnoService.save(alumno);
-	}
-
-	
-	
-  @PutMapping("/{id}") public ResponseEntity<Alumno> updateAlumno(@PathVariable
-  Long id, @RequestBody Alumno alumnoDetails) { Alumno alumno =
-  alumnoService.findByID(id); if (alumno == null) { return
-  ResponseEntity.notFound().build(); }
-  alumno.setNombre(alumnoDetails.getNombre());
-  alumno.setApellido(alumnoDetails.getApellido());
-  alumno.setTelefono(alumnoDetails.getTelefono());
-  alumno.setEmail(alumnoDetails.getEmail());
-  alumno.setDni(alumnoDetails.getDni());
-  alumno.setFecha_nacimiento(alumnoDetails.getFecha_nacimiento()); return
-  ResponseEntity.ok(alumnoService.save(alumno)); }
-  
-  
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteAlumno(@PathVariable Long id) {
-      Alumno alumno = alumnoService.findByID(id);
-      if (alumno == null) {
-          return ResponseEntity.notFound().build();
-      }
-      alumnoService.deleteById(id);
-      return ResponseEntity.ok().build();
-  }
-	 
+ 
+    @Autowired
+    private AlumnoService alumnoService;
+ 
+    @GetMapping
+    public String listAlumnos(Model model) {
+        model.addAttribute("alumnos", alumnoService.findAll());
+        model.addAttribute("alumno", new Alumno());
+        return "alumnos";
+    }
+ 
+    @PostMapping
+    public String saveAlumno(@ModelAttribute("alumno") Alumno alumno) {
+        alumnoService.save(alumno);
+        return "redirect:/alumnos";
+    }
+ 
+    @GetMapping("/{id}")
+    public String showAlumno(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        Alumno alumno = alumnoService.findByID(id);
+        if (alumno != null) {
+	        model.addAttribute("alumno", alumno);
+	        return "alumno-details";
+        }else {
+        	redirectAttributes.addFlashAttribute("error", "Alumno no encontrado");
+        }
+		return "redirect:/alumnos";
+    }
+    
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoService.findByID(id);
+        if (alumno != null) {
+	        model.addAttribute("alumno", alumno);
+	        return "edit-alumno";
+        }else {
+        	return "redirect:/alumnos";
+        }
 		
-	/*
-	 * @PutMapping("/alumnos/update/{id}") public Alumno alumnoUpdate(@PathVariable
-	 * Long id, @RequestBody Alumno alumno) {
-	 * 
-	 * Alumno alumnoUpdateRequest = alumnoService.findByID(id);
-	 * 
-	 * alumnoUpdateRequest.setNombre(alumno.getNombre());
-	 * alumnoUpdateRequest.setApellido(alumno.getApellido());
-	 * alumnoUpdateRequest.setEmail(alumno.getEmail());
-	 * alumnoUpdateRequest.setTelefono(alumno.getTelefono());
-	 * alumnoUpdateRequest.setDni(alumno.getDni());
-	 * alumnoUpdateRequest.setFecha_nacimiento(alumno.getFecha_nacimiento());
-	 * 
-	 * 
-	 * return alumnoService.save(alumnoUpdateRequest); }
-	 */
-	  
-	  
+    }
+    
+    @PostMapping("/update/{id}")
+    public String updateAlumno(@PathVariable("id") Long id, @ModelAttribute Alumno alumno, RedirectAttributes redirectAttributes) {
+        alumnoService.save(alumno);
+        redirectAttributes.addFlashAttribute("success", "Alumno actualizado correctamente");
+        return "redirect:/alumnos";
+    }
+    
+    
+ 
+    @GetMapping("/delete/{id}")
+    public String deleteAlumno(@PathVariable("id") Long id) {
+        alumnoService.deleteById(id);
+        return "redirect:/alumnos";
+    }
 }

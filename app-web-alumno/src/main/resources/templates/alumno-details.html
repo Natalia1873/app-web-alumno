@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Alumno</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }
+        .container { background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .detail { margin-bottom: 10px; }
+        .label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Alumno</h1>
+        <div class="detail">
+            <span class="label">Nombre:</span>
+            <span th:text="${alumno.nombre}"></span>
+        </div>
+        <div class="detail">
+            <span class="label">Apellido:</span>
+            <span th:text="${alumno.apellido}"></span>
+        </div>
+        <div class="detail">
+            <span class="label">Teléfono:</span>
+            <span th:text="${alumno.telefono}"></span>
+        </div>
+        <div class="detail">
+            <span class="label">Email:</span>
+            <span th:text="${alumno.email}"></span>
+        </div>
+        <div class="detail">
+            <span class="label">DNI:</span>
+            <span th:text="${alumno.dni}"></span>
+        </div>
+        <div class="detail">
+            <span class="label">Fecha de Nacimiento:</span>
+            <span th:text="${#temporals.format(alumno.fecha_nacimiento, 'dd-MM-yyyy')}"></span>
+        </div>
+        <a th:href="@{/alumnos}">Volver a la lista de alumnos</a>
+    </div>
+</body>
+</html>
