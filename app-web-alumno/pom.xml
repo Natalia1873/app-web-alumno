@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -9,10 +8,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.keepcoding.appweb</groupId>
-	<artifactId>app-web-alumno</artifactId>
+	<artifactId>app-web-mvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>app-web-alumno</name>
-	<description>aplicasion web con vista html </description>
+	<name>app-web-mvc</name>
+	<description>Ejemplo de aplicacion web mvc</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -59,17 +58,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Зависимости для валидации -->
-		<dependency>
-			<groupId>jakarta.validation</groupId>
-			<artifactId>jakarta.validation-api</artifactId>
-			<version>3.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>7.0.4.Final</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -80,4 +68,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }
+        .container { background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        input, button { margin: 5px; padding: 5px; }
+        .actions { display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Alumnos</h1>
+        
+        <h2>Agregar/Editar Alumno</h2>
+        <form id="alumnoForm">
+            <input type="hidden" id="alumnoId" name="id">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+            <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="dni" name="dni" placeholder="DNI" required>
+            <input type="date" id="fecha_nac" name="fecha_nac" required>
+            <button type="submit">Guardar</button>
+        </form>
+
+        <h2>Lista de Alumnos</h2>
+        <table id="alumnosTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>DNI</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se insertarán las filas de alumnos dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Aquí iría el código JavaScript para manejar las operaciones CRUD
+        // Este código se comunicaría con el backend a través de fetch o XMLHttpRequest
+    </script>
+</body>
+</html>
