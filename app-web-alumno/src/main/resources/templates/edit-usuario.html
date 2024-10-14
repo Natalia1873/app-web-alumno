@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario</title>
+    <style>
+        /* Estilos similares a los de edit-alumno.html */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Usuario</h1>
+        <form th:action="@{/usuarios/update/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
+            <input type="email" th:field="*{email}" placeholder="Email" required>
+            <input type="text" th:field="*{username}" placeholder="Nombre de usuario" required>
+            <input type="password" th:field="*{password}" placeholder="Contraseña" required>
+            <label>
+                <input type="checkbox" th:field="*{activo}"> Activo
+            </label>
+            <button type="submit">Actualizar</button>
+        </form>
+        <a th:href="@{/usuarios}">Volver a la lista de usuarios</a>
+    </div>
+</body>
+</html>
