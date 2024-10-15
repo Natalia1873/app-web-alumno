@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistema de Gestión de Alumnos</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
-        .login-container { background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input { display: block; margin: 10px 0; padding: 5px; width: 200px; }
-        button { display: block; margin: 10px 0; padding: 5px 10px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-        .register-link { margin-top: 10px; text-align: center; }
+        /* ... estilos existentes ... */
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
         <form action="/login" method="post">
             <input type="text" name="username" placeholder="Nombre de usuario" required>
             <input type="password" name="password" placeholder="Contraseña" required>

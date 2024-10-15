@@ -71,8 +71,14 @@ public class UsuarioController {
 
     @PostMapping("/register")
     public String registerUsuario(@ModelAttribute Usuario usuario, RedirectAttributes redirectAttributes) {
-        usuarioService.save(usuario);
-        redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
-        return "redirect:/login";
+        try {
+            usuario.setActivo(true); // Establecer el usuario como activo por defecto
+            usuarioService.save(usuario);
+            redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
+            return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al registrar el usuario: " + e.getMessage());
+            return "redirect:/usuarios/register";
+        }
     }
 }

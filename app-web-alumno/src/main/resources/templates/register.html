@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +10,28 @@
         input { display: block; margin: 10px 0; padding: 5px; width: 200px; }
         button { display: block; margin: 10px 0; padding: 5px 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
         .login-link { margin-top: 10px; text-align: center; }
+        .error-message { color: red; margin-bottom: 10px; }
+        .success-message { color: green; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="register-container">
         <h2>Crear Nueva Cuenta</h2>
-        <form action="/register" method="post">
-            <input type="text" name="nombre" placeholder="Nombre" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="text" name="username" placeholder="Nombre de usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="success-message">
+            <p th:text="${success}"></p>
+        </div>
+        <form th:action="@{/usuarios/register}" th:object="${usuario}" method="post">
+            <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
+            <input type="email" th:field="*{email}" placeholder="Email" required>
+            <input type="text" th:field="*{username}" placeholder="Nombre de usuario" required>
+            <input type="password" th:field="*{password}" placeholder="Contraseña" required>
             <button type="submit">Registrarse</button>
         </form>
         <div class="login-link">
-            <a href="/login">Volver al inicio de sesión</a>
+            <a th:href="@{/login}">Volver al inicio de sesión</a>
         </div>
     </div>
 </body>
