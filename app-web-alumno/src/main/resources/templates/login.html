@@ -6,9 +6,9 @@
     <title>Login - Sistema de Gestión de Alumnos</title>
     <style>
         /* ... estilos existentes ... */
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
+        .register-link {
+            margin-top: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -17,6 +17,9 @@
         <h2>Iniciar Sesión</h2>
         <div th:if="${error}" class="error-message">
             <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="success-message">
+            <p th:text="${success}"></p>
         </div>
         <form action="/login" method="post">
             <input type="text" name="username" placeholder="Nombre de usuario" required>

@@ -23,7 +23,7 @@
         <div th:if="${success}" class="success-message">
             <p th:text="${success}"></p>
         </div>
-        <form th:action="@{/usuarios/register}" th:object="${usuario}" method="post">
+        <form th:action="@{/usuarios/create}" th:object="${usuario}" method="post">
             <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
             <input type="email" th:field="*{email}" placeholder="Email" required>
             <input type="text" th:field="*{username}" placeholder="Nombre de usuario" required>
@@ -31,7 +31,7 @@
             <button type="submit">Registrarse</button>
         </form>
         <div class="login-link">
-            <a th:href="@{/login}">Volver al inicio de sesión</a>
+            <a th:href="@{/}">Volver al inicio de sesión</a>
         </div>
     </div>
 </body>
